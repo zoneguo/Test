@@ -15,4 +15,6 @@ interface IBinderPool {
     IBinder queryBinder(int binderCode);
 
     void updateWindow(in Window inWin, out Window outWin);
+
+    oneway void getValue();
 }
