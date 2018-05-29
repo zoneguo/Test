@@ -57,7 +57,7 @@ public class EventBusTestActivity extends AppCompatActivity implements View.OnCl
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0, sticky = false)
     public void onReceiveEvent(MyEvent event) {
         Toast.makeText(EventBusTestActivity.this, event.getMsg(), Toast.LENGTH_SHORT).show();
     }

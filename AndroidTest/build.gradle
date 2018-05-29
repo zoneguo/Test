@@ -2,7 +2,11 @@
 
 buildscript {
     repositories {
-        jcenter()
+//        jcenter()
+        def REPOSITORY_URL = 'http://maven.aliyun.com/nexus/content/groups/public/';
+        maven {
+            url REPOSITORY_URL
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
@@ -14,7 +18,11 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+//        jcenter()
+        def REPOSITORY_URL = 'http://maven.aliyun.com/nexus/content/groups/public/';
+        maven {
+            url REPOSITORY_URL
+        }
     }
 }
 

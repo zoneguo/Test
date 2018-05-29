@@ -103,11 +103,40 @@ public class MainActivity extends Activity {
         Log.d(TAG, "[test4] CONSTANT = " + JavaConstantTest.sContant);
     }
 
+    private synchronized void test1_1() {
+        Log.d(TAG, "[test1_1] begin");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "[test1_1] end");
+    }
+
     private List<TestItemBean> buildTestItems() {
-        TestItemBean bean1 = new TestItemBean("test1", new TestItemBean.Action() {
+        TestItemBean bean1 = new TestItemBean("synchronized", new TestItemBean.Action() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, "test1", Toast.LENGTH_SHORT).show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        test1_1();
+                    }
+                }).start();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        test1_1();
+                    }
+                }).start();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        test1_1();
+                    }
+                }).start();
             }
         });
 
