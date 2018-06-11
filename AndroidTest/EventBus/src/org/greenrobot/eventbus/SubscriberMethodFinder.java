@@ -190,6 +190,7 @@ class SubscriberMethodFinder {
 
     static class FindState {
         final List<SubscriberMethod> subscriberMethods = new ArrayList<>();
+        // 主要起优化作用，在判断一个方法是否可以加入到注册事件响应方法列表时，规避大部分情况下没有必要的判断
         final Map<Class, Object> anyMethodByEventType = new HashMap<>();
         final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
         final StringBuilder methodKeyBuilder = new StringBuilder(128);

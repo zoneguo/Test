@@ -61,4 +61,9 @@ public class EventBusTestActivity extends AppCompatActivity implements View.OnCl
     public void onReceiveEvent(MyEvent event) {
         Toast.makeText(EventBusTestActivity.this, event.getMsg(), Toast.LENGTH_SHORT).show();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 0, sticky = false)
+    public void onReceiveEvent1(MyEvent event) {
+        Toast.makeText(EventBusTestActivity.this, event.getMsg() + "heihei", Toast.LENGTH_SHORT).show();
+    }
 }

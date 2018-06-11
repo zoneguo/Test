@@ -242,8 +242,10 @@ public class EventBus {
         List<Class<?>> subscribedTypes = typesBySubscriber.get(subscriber);
         if (subscribedTypes != null) {
             for (Class<?> eventType : subscribedTypes) {
+                // 1. 从事件类型对应的订阅者列表中删除订阅者信息
                 unsubscribeByEventType(subscriber, eventType);
             }
+            // 2. 删除注册对象和对应的所有事件响应方法列表
             typesBySubscriber.remove(subscriber);
         } else {
             logger.log(Level.WARNING, "Subscriber to unregister was not registered before: " + subscriber.getClass());
@@ -252,10 +254,12 @@ public class EventBus {
 
     /** Posts the given event to the event bus. */
     public void post(Object event) {
+        // 1. 添加当前事件到当前线程的事件派发队列中
         PostingThreadState postingState = currentPostingThreadState.get();
         List<Object> eventQueue = postingState.eventQueue;
         eventQueue.add(event);
 
+        // 2. 当前事件派发已经进行直接退出
         if (!postingState.isPosting) {
             postingState.isMainThread = isMainThread();
             postingState.isPosting = true;
@@ -263,6 +267,7 @@ public class EventBus {
                 throw new EventBusException("Internal error. Abort state was not reset");
             }
             try {
+                // 3. 循环当前事件派发队列中的每个事件，执行postSingleEvent
                 while (!eventQueue.isEmpty()) {
                     postSingleEvent(eventQueue.remove(0), postingState);
                 }
